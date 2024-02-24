@@ -11,6 +11,10 @@ import jakarta.persistence.Table;
 @Entity
 public class Account {
 	
+	public Account() {
+		super();
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

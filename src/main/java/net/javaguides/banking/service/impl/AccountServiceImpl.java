@@ -1,5 +1,9 @@
 package net.javaguides.banking.service.impl;
 
+import java.util.Optional;
+
+import javax.security.auth.login.AccountNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import net.javaguides.banking.dto.AccountDto;
@@ -24,4 +28,29 @@ public class AccountServiceImpl implements AccountService {
 		return (AccountMapper.mapToAccountDto(savedAccount));
 	}
 
+//	@Override
+//	public AccountDto getAccountById(Long id) {
+//		
+//		Optional<Account> optionalAccount = accountRepository.findById(id);
+//		
+//		if (optionalAccount.isPresent()) {
+//			Account account = optionalAccount.get();
+//			return AccountMapper.mapToAccountDto(account);
+//        } else {
+//            System.out.println("Account not found for ID: " + id);
+//        }
+//				
+//		return null;
+//	}
+	
+	public AccountDto getAccountById(Long id) throws AccountNotFoundException {
+	    Optional<Account> optionalAccount = accountRepository.findById(id);
+
+	    if (optionalAccount.isPresent()) {
+	        Account account = optionalAccount.get();
+	        return AccountMapper.mapToAccountDto(account);
+	    } else {
+	        throw new AccountNotFoundException("Account not found for ID: " + id);
+	    }
+	}
 }

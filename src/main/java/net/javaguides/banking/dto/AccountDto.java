@@ -5,12 +5,16 @@ import lombok.Data;
 @Data
 public class AccountDto {
 	
+	private Long id;
+	private String accountHolderName;
+	private double balance;
+	
 	public AccountDto(Long id, String accountHolderName, double balance) {
-		super();
 		this.id = id;
 		this.accountHolderName = accountHolderName;
 		this.balance = balance;
 	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -29,10 +33,4 @@ public class AccountDto {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	private Long id;
-	private String accountHolderName;
-	private double balance;
-	
-
-
 }

@@ -20,13 +20,8 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 	
-	@PostMapping
+	@PostMapping("/createAccount")
 	public ResponseEntity<AccountDto> addAccount(@RequestBody AccountDto accountDto){
 		return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
 	}
-
-	
-	
-	
-
 }

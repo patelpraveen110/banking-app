@@ -53,4 +53,60 @@ public class AccountServiceImpl implements AccountService {
 	        throw new AccountNotFoundException("Account not found for ID: " + id);
 	    }
 	}
+
+	@Override
+	public AccountDto deposit(Long id, double amount) throws AccountNotFoundException {
+		Optional<Account> optionalAccount = accountRepository.findById(id);
+
+	    if (optionalAccount.isPresent()) {
+	        Account account = optionalAccount.get();
+	        
+	        double total = account.getBalance() + amount;
+	        account.setBalance(total);
+	        Account savedAccount = accountRepository.save(account);
+	        return AccountMapper.mapToAccountDto(savedAccount);
+	    } else {
+	        throw new AccountNotFoundException("Account not found for ID: " + id);
+	    }
+	}
+
+	@Override
+	public AccountDto withdraw(Long id, double amount) throws AccountNotFoundException {
+		
+		Optional<Account> optionalAccount = accountRepository.findById(id);
+	    if (optionalAccount.isPresent()) {
+	        Account account = optionalAccount.get();
+	        
+	        if(account.getBalance() < amount) {
+	        	throw new AccountNotFoundException("Insufficient balance for: " + id);
+	        }
+	        double total = account.getBalance() - amount;
+	        account.setBalance(total);
+	        Account savedAccount = accountRepository.save(account);
+	        return AccountMapper.mapToAccountDto(savedAccount);
+	    } else {
+	        throw new AccountNotFoundException("Account not found for ID: " + id);
+	    }
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

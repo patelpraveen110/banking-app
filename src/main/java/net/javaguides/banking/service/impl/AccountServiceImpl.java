@@ -1,6 +1,8 @@
 package net.javaguides.banking.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -87,6 +89,14 @@ public class AccountServiceImpl implements AccountService {
 	    } else {
 	        throw new AccountNotFoundException("Account not found for ID: " + id);
 	    }
+	}
+
+	@Override
+	public List<AccountDto> getAllAccounts() {
+		List<Account> accounts = accountRepository.findAll();
+		List<AccountDto> result = accounts.stream().map(account-> AccountMapper.mapToAccountDto(account))
+		                  .collect(Collectors.toList());
+		return result;
 	}
 }
 

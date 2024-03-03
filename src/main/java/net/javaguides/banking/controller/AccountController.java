@@ -1,5 +1,6 @@
 package net.javaguides.banking.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.javaguides.banking.dto.AccountDto;
+import net.javaguides.banking.repository.AccountRepository;
 import net.javaguides.banking.service.AccountService;
 
 @RestController
@@ -42,8 +44,7 @@ public class AccountController {
 	
 	//API for updating account balance
 	@PutMapping("/deposite/{id}")
-	public ResponseEntity<AccountDto> deposite(@PathVariable Long id, @RequestBody Map<String,Double> request) 
-			throws AccountNotFoundException{
+	public ResponseEntity<AccountDto> deposite(@PathVariable Long id, @RequestBody Map<String,Double> request) throws AccountNotFoundException{
 		
 		Double amount = request.get("amount");
 		AccountDto accountDto = accountService.deposit(id,amount);
@@ -52,12 +53,16 @@ public class AccountController {
 	
 	//API for updating account balance
 	@PutMapping("/withdraw/{id}")
-	public ResponseEntity<AccountDto> withdraw(@PathVariable Long id, @RequestBody Map<String,Double> request) 
-			throws AccountNotFoundException{
+	public ResponseEntity<AccountDto> withdraw(@PathVariable Long id, @RequestBody Map<String,Double> request) throws AccountNotFoundException{
 		
 		Double amount = request.get("amount");
 		AccountDto accountDto = accountService.withdraw(id,amount);
 		return ResponseEntity.ok(accountDto);
 	}
 	
+	@GetMapping("/getAllAccounts")
+	public ResponseEntity<List<AccountDto>> getAllAccounts(){
+		List<AccountDto> accounts = accountService.getAllAccounts();
+		return ResponseEntity.ok(accounts);
+	}
 }

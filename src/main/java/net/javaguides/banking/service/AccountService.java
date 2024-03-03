@@ -17,5 +17,7 @@ public interface AccountService {
 	AccountDto withdraw(Long id, double amount) throws AccountNotFoundException;
 	
 	List<AccountDto> getAllAccounts();
+	
+	void deleteAccount(Long id) throws AccountNotFoundException;
 
 }

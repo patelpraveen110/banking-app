@@ -7,6 +7,7 @@ import javax.security.auth.login.AccountNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,5 +65,11 @@ public class AccountController {
 	public ResponseEntity<List<AccountDto>> getAllAccounts(){
 		List<AccountDto> accounts = accountService.getAllAccounts();
 		return ResponseEntity.ok(accounts);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteAccount(@PathVariable Long id) throws AccountNotFoundException{
+		accountService.deleteAccount(id);
+		return ResponseEntity.ok("Account is deleted successfully");
 	}
 }
